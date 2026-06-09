@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurangzaib Cars – Buy & Sell Premium Vehicles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-dark: #922b21;
+    --red-light: #f9ebea;
+    --dark: #1a1a1a;
+    --dark2: #2d2d2d;
+    --gray: #6b7280;
+    --gray-light: #f3f4f6;
+    --white: #ffffff;
+    --border: #e5e7eb;
+    --success: #16a34a;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: #fff; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px; font-weight: 800; color: #fff;
+    letter-spacing: 1px;
+  }
+  .logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: #ccc; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-btn {
+    background: var(--red); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 8px 18px; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: background .2s;
+  }
+  .nav-btn:hover { background: var(--red-dark); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 60%, #3a1810 100%);
+    color: #fff;
+    padding: 80px 5% 70px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(192,57,43,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 620px; position: relative; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--red); color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(38px, 6vw, 68px);
+    font-weight: 800; line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .hero h1 em { color: var(--red); font-style: normal; }
+  .hero p { font-size: 17px; color: #bbb; line-height: 1.7; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 14px 28px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.3); border-radius: 8px;
+    padding: 14px 28px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: border-color .2s, background .2s;
+  }
+  .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.07); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--red);
+    display: flex; justify-content: center; flex-wrap: wrap;
+    padding: 20px 5%; gap: 40px;
+  }
+  .stat { text-align: center; color: #fff; }
+  .stat-num { font-size: 28px; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 12px; opacity: 0.85; letter-spacing: .5px; margin-top: 2px; }
+
+  /* SEARCH BAR */
+  .search-section { background: var(--gray-light); padding: 36px 5%; }
+  .search-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: var(--shadow-lg);
+    max-width: 960px; margin: 0 auto;
+  }
+  .search-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--dark); }
+  .search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; align-items: end;
+  }
+  .search-grid select, .search-grid input {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    color: var(--dark);
+    transition: border-color .2s;
+  }
+  .search-grid select:focus, .search-grid input:focus {
+    outline: none; border-color: var(--red);
+  }
+  .search-grid label { display: block; font-size: 12px; font-weight: 600; color: var(--gray); margin-bottom: 5px; }
+  .search-btn {
+    background: var(--red); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 11px 20px; font-size: 14px; font-weight: 700;
+    cursor: pointer; width: 100%; transition: background .2s;
+  }
+  .search-btn:hover { background: var(--red-dark); }
+
+  /* LISTINGS */
+  .section { padding: 64px 5%; }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+  }
+  .section-header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px; font-weight: 800; color: var(--dark);
+  }
+  .section-header h2 span { color: var(--red); }
+  .view-all {
+    font-size: 14px; font-weight: 600; color: var(--red);
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+  }
+  .cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .car-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+  }
+  .car-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .car-img {
+    width: 100%; height: 200px;
+    object-fit: cover; background: var(--gray-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+    position: relative; overflow: hidden;
+  }
+  .car-img img { width: 100%; height: 100%; object-fit: cover; }
+  .car-img-placeholder {
+    width: 100%; height: 200px;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #aaa; font-size: 13px;
+  }
+  .car-img-placeholder svg { margin-bottom: 8px; opacity: .4; }
+  .badge-sold {
+    position: absolute; top: 12px; right: 12px;
+    background: #1a1a1a; color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .badge-new {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--red); color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .badge-featured {
+    position: absolute; top: 12px; left: 12px;
+    background: #f59e0b; color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .car-info { padding: 16px 18px 18px; }
+  .car-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .car-specs {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin: 8px 0; font-size: 13px; color: var(--gray);
+  }
+  .car-specs span { display: flex; align-items: center; gap: 4px; }
+  .car-price {
+    font-size: 22px; font-weight: 800; color: var(--red);
+    margin-top: 10px;
+  }
+  .car-price small { font-size: 13px; color: var(--gray); font-weight: 400; }
+  .car-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .btn-detail {
+    flex: 1; background: var(--dark); color: #fff;
+    border: none; border-radius: 8px; padding: 9px 12px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s;
+  }
+  .btn-detail:hover { background: #333; }
+  .btn-whatsapp {
+    background: #25d366; color: #fff;
+    border: none; border-radius: 8px; padding: 9px 12px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 5px; transition: background .2s;
+  }
+  .btn-whatsapp:hover { background: #1da851; }
+
+  /* CAR DETAIL MODAL */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(2px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 16px;
+    max-width: 680px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    padding: 32px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--gray-light); border: none; border-radius: 50%;
+    width: 36px; height: 36px; cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .modal-close:hover { background: #e5e7eb; }
+  .modal-img {
+    width: 100%; height: 280px; object-fit: cover;
+    border-radius: 10px; margin-bottom: 20px;
+    background: var(--gray-light);
+  }
+  .modal-img-placeholder {
+    width: 100%; height: 280px; border-radius: 10px; margin-bottom: 20px;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    display: flex; align-items: center; justify-content: center;
+    color: #bbb; font-size: 15px;
+  }
+  .modal h2 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+  .modal-price { font-size: 28px; font-weight: 800; color: var(--red); margin-bottom: 20px; }
+  .spec-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 20px;
+  }
+  .spec-item { background: var(--gray-light); border-radius: 8px; padding: 12px; }
+  .spec-item label { font-size: 11px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: .5px; display: block; margin-bottom: 3px; }
+  .spec-item span { font-size: 15px; font-weight: 700; }
+  .modal-desc { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 20px; }
+  .modal-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .modal-btns button { flex: 1; min-width: 140px; padding: 13px; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+
+  /* ADMIN PANEL */
+  #admin-section { background: #f8f8f8; padding: 64px 5%; }
+  .admin-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 32px;
+  }
+  .admin-header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 30px; font-weight: 800;
+  }
+  .admin-lock {
+    background: var(--dark); color: #fff;
+    border-radius: 8px; padding: 40px;
+    max-width: 400px; margin: 0 auto; text-align: center;
+  }
+  .admin-lock h3 { font-size: 20px; margin-bottom: 10px; }
+  .admin-lock p { color: #aaa; font-size: 14px; margin-bottom: 20px; }
+  .admin-lock input {
+    width: 100%; padding: 12px; border: 1.5px solid #444;
+    border-radius: 8px; background: #333; color: #fff;
+    font-size: 15px; margin-bottom: 12px; font-family: 'Inter', sans-serif;
+  }
+  .admin-lock input:focus { outline: none; border-color: var(--red); }
+  .admin-panel { display: none; }
+  .admin-panel.visible { display: block; }
+  .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .form-card {
+    background: #fff; border-radius: 12px; padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .form-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--gray); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: 'Inter', sans-serif;
+    background: #fafafa; color: var(--dark);
+    transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--red);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .submit-btn {
+    width: 100%; background: var(--red); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 13px; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: background .2s;
+    margin-top: 8px;
+  }
+  .submit-btn:hover { background: var(--red-dark); }
+  .manage-card {
+    background: #fff; border-radius: 12px; padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .manage-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+  .manage-list { display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; }
+  .manage-item {
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; background: #fafafa;
+  }
+  .manage-item-info { flex: 1; min-width: 0; }
+  .manage-item-title { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .manage-item-price { font-size: 13px; color: var(--red); font-weight: 600; }
+  .manage-item-status { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .status-available { background: #dcfce7; color: var(--success); }
+  .status-sold { background: #fee2e2; color: var(--red-dark); }
+  .manage-actions { display: flex; gap: 6px; }
+  .btn-edit, .btn-del {
+    border: none; border-radius: 6px; padding: 6px 12px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .btn-edit { background: var(--gray-light); color: var(--dark); }
+  .btn-edit:hover { background: #e5e7eb; }
+  .btn-del { background: #fee2e2; color: var(--red-dark); }
+  .btn-del:hover { background: #fecaca; }
+
+  /* WHY US */
+  .why-section { background: var(--dark); padding: 64px 5%; }
+  .why-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 800; color: #fff;
+    text-align: center; margin-bottom: 40px;
+  }
+  .why-section h2 span { color: var(--red); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .why-card { text-align: center; padding: 28px 20px; }
+  .why-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(192,57,43,0.15); border: 1.5px solid rgba(192,57,43,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 24px;
+  }
+  .why-card h4 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .why-card p { color: #888; font-size: 14px; line-height: 1.6; }
+
+  /* CONTACT */
+  .contact-section { padding: 64px 5%; background: var(--gray-light); }
+  .contact-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 800; text-align: center; margin-bottom: 40px;
+  }
+  .contact-section h2 span { color: var(--red); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 880px; margin: 0 auto; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item { display: flex; gap: 14px; align-items: flex-start; }
+  .contact-item-icon {
+    width: 44px; height: 44px; min-width: 44px;
+    border-radius: 10px; background: var(--red);
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .contact-item-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .contact-item-text p { font-size: 14px; color: var(--gray); }
+  .contact-form { background: #fff; border-radius: 12px; padding: 28px; box-shadow: var(--shadow); }
+  .contact-form h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+  /* FOOTER */
+  footer { background: #111; color: #888; padding: 32px 5%; text-align: center; font-size: 13px; }
+  footer strong { color: #fff; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    background: var(--dark); color: #fff; border-radius: 8px;
+    padding: 12px 24px; font-size: 14px; font-weight: 600;
+    z-index: 999; opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .admin-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .spec-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero { padding: 50px 5% 50px; }
+  }
+  @media (max-width: 480px) {
+    .stats-bar { gap: 20px; }
+    .search-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Image upload preview */
+  .img-preview {
+    width: 100%; height: 140px; border-radius: 8px;
+    border: 2px dashed var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; overflow: hidden; position: relative;
+    background: #fafafa; transition: border-color .2s;
+  }
+  .img-preview:hover { border-color: var(--red); }
+  .img-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .img-preview input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    width: 100%; height: 100%;
+  }
+  .img-preview-text { text-align: center; color: var(--gray); font-size: 13px; pointer-events: none; }
+
+  /* Mobile menu */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 150;
+    background: var(--dark); padding: 24px;
+    flex-direction: column; gap: 20px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: #fff; font-size: 20px; font-weight: 600; padding: 12px 0; border-bottom: 1px solid #333; }
+  .mobile-menu-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
+  <a href="#listings" onclick="closeMobileMenu()">Browse Cars</a>
+  <a href="#sell" onclick="closeMobileMenu()">Sell Your Car</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a href="#admin-section" onclick="closeMobileMenu()">Admin</a>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">AURANGZAIB<span> CARS</span></div>
+  <div class="nav-links">
+    <a href="#listings">Browse Cars</a>
+    <a href="#sell">Sell Your Car</a>
+    <a href="#contact">Contact</a>
+    <a href="#admin-section">Admin Panel</a>
+  </div>
+  <button class="nav-btn" onclick="scrollTo('#listings')">View Listings →</button>
+  <div class="hamburger" onclick="document.getElementById('mobileMenu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🚗 Pakistan's Trusted Auto Dealer</div>
+    <h1>Find Your<br><em>Perfect Car</em><br>Today</h1>
+    <p>Aurangzaib Cars brings you the best selection of quality vehicles — buy or sell with confidence. Transparent deals, verified cars, unbeatable prices.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollTo('#listings')">Browse All Cars</button>
+      <button class="btn-outline" onclick="scrollTo('#sell')">Sell Your Car</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Cars Listed</div></div>
+  <div class="stat"><div class="stat-num" id="stat-sold">0</div><div class="stat-label">Cars Sold</div></div>
+  <div class="stat"><div class="stat-num">5★</div><div class="stat-label">Customer Rating</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Verified Listings</div></div>
+</div>
+
+<!-- SEARCH -->
+<section class="search-section">
+  <div class="search-box">
+    <h3>🔍 Search for Your Car</h3>
+    <div class="search-grid">
+      <div>
+        <label>Make / Brand</label>
+        <select id="filter-make" onchange="filterCars()">
+          <option value="">All Makes</option>
+          <option>Toyota</option><option>Honda</option><option>Suzuki</option>
+          <option>Kia</option><option>Hyundai</option><option>Nissan</option>
+          <option>BMW</option><option>Mercedes</option><option>Audi</option>
+          <option>Ford</option><option>Chevrolet</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Min Year</label>
+        <select id="filter-year" onchange="filterCars()">
+          <option value="">Any Year</option>
+          <option>2024</option><option>2023</option><option>2022</option>
+          <option>2021</option><option>2020</option><option>2019</option>
+          <option>2018</option><option>2017</option><option>2016</option>
+          <option>2015</option><option>Older</option>
+        </select>
+      </div>
+      <div>
+        <label>Max Price (PKR)</label>
+        <select id="filter-price" onchange="filterCars()">
+          <option value="">Any Price</option>
+          <option value="1000000">Under 10 Lakh</option>
+          <option value="2000000">Under 20 Lakh</option>
+          <option value="3000000">Under 30 Lakh</option>
+          <option value="5000000">Under 50 Lakh</option>
+          <option value="10000000">Under 1 Crore</option>
+        </select>
+      </div>
+      <div>
+        <label>Condition</label>
+        <select id="filter-condition" onchange="filterCars()">
+          <option value="">All</option>
+          <option>Available</option>
+          <option>Sold</option>
+        </select>
+      </div>
+      <div>
+        <label>Search by Name</label>
+        <input type="text" id="filter-search" placeholder="e.g. Corolla, Civic..." oninput="filterCars()">
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button class="search-btn" onclick="resetFilters()">Reset Filters</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section class="section" id="listings">
+  <div class="section-header">
+    <h2>Available <span>Cars</span></h2>
+    <div class="view-all" id="listing-count">All listings</div>
+  </div>
+  <div class="cars-grid" id="cars-grid">
+    <!-- Populated by JS -->
+  </div>
+  <div id="no-results" style="display:none; text-align:center; padding:40px; color:var(--gray);">
+    <div style="font-size:48px; margin-bottom:12px;">🚗</div>
+    <p style="font-size:16px;">No cars match your search. Try different filters.</p>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section">
+  <h2>Why Choose <span>Aurangzaib Cars</span></h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">✅</div>
+      <h4>Verified Listings</h4>
+      <p>Every car is personally inspected and verified before listing.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <h4>Best Prices</h4>
+      <p>Competitive market pricing with no hidden fees or charges.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📄</div>
+      <h4>Clear Documentation</h4>
+      <p>All paperwork handled — transfer, registration, and more.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🤝</div>
+      <h4>Trusted Service</h4>
+      <p>Years of experience building trusted relationships with buyers and sellers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SELL YOUR CAR SECTION -->
+<section class="section" id="sell" style="background:#fff;">
+  <div class="section-header">
+    <h2>Want to <span>Sell</span> Your Car?</h2>
+  </div>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:24px; max-width:800px;">
+    <div style="background:var(--gray-light); border-radius:12px; padding:24px; text-align:center;">
+      <div style="font-size:36px; margin-bottom:12px;">📱</div>
+      <h4 style="font-size:16px; font-weight:700; margin-bottom:6px;">Contact Us Directly</h4>
+      <p style="font-size:14px; color:var(--gray); line-height:1.6;">Reach out via WhatsApp or call for a quick valuation of your vehicle.</p>
+      <a href="https://wa.me/923001234567?text=Hi! I want to sell my car." target="_blank">
+        <button style="margin-top:14px; background:#25d366; color:#fff; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; width:100%;">
+          📲 WhatsApp Us
+        </button>
+      </a>
+    </div>
+    <div style="background:var(--gray-light); border-radius:12px; padding:24px; text-align:center;">
+      <div style="font-size:36px; margin-bottom:12px;">🔎</div>
+      <h4 style="font-size:16px; font-weight:700; margin-bottom:6px;">Free Car Evaluation</h4>
+      <p style="font-size:14px; color:var(--gray); line-height:1.6;">Get a free market evaluation for your car — no commitment required.</p>
+      <button onclick="scrollTo('#contact')" style="margin-top:14px; background:var(--red); color:#fff; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; width:100%;">
+        Request Evaluation
+      </button>
+    </div>
+    <div style="background:var(--gray-light); border-radius:12px; padding:24px; text-align:center;">
+      <div style="font-size:36px; margin-bottom:12px;">⚡</div>
+      <h4 style="font-size:16px; font-weight:700; margin-bottom:6px;">Fast Deals</h4>
+      <p style="font-size:14px; color:var(--gray); line-height:1.6;">We handle everything quickly — get your money within 24–48 hours.</p>
+      <button onclick="scrollTo('#contact')" style="margin-top:14px; background:var(--dark); color:#fff; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; width:100%;">
+        Learn More
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <h2>Get In <span>Touch</span></h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text">
+          <h4>Location</h4>
+          <p>Aurangzaib Cars Showroom<br>Main Auto Market, Lahore, Pakistan</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text">
+          <h4>Phone / WhatsApp</h4>
+          <p>+92 300 1234567<br>Available 9 AM – 8 PM</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div class="contact-item-text">
+          <h4>Email</h4>
+          <p>aurangzaibcars@gmail.com</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div class="contact-item-text">
+          <h4>Working Hours</h4>
+          <p>Monday – Saturday: 9 AM – 8 PM<br>Sunday: 11 AM – 5 PM</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Send a Message</h3>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="contact-name" placeholder="Muhammad Ali">
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp</label>
+        <input type="tel" id="contact-phone" placeholder="+92 300 ...">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="contact-msg" placeholder="I'm interested in a car..." style="height:100px;"></textarea>
+      </div>
+      <button class="submit-btn" onclick="sendContactMsg()">Send via WhatsApp 📲</button>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN PANEL -->
+<section id="admin-section">
+  <div class="admin-header">
+    <h2>🔐 Admin Panel</h2>
+  </div>
+  <div id="admin-lock-box">
+    <div class="admin-lock">
+      <h3>Admin Access</h3>
+      <p>Enter your password to manage car listings</p>
+      <input type="password" id="admin-pw" placeholder="Enter password..." onkeydown="if(event.key==='Enter') adminLogin()">
+      <button class="submit-btn" onclick="adminLogin()">Login</button>
+      <p style="margin-top:14px; font-size:12px; color:#666;">Default password: <code style="color:#ff9999;">admin123</code></p>
+    </div>
+  </div>
+  <div class="admin-panel" id="admin-panel">
+    <div class="admin-grid">
+      <!-- ADD CAR FORM -->
+      <div class="form-card">
+        <h3 id="form-title">➕ Add New Car</h3>
+        <input type="hidden" id="edit-id">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Make / Brand *</label>
+            <select id="car-make">
+              <option value="">Select Make</option>
+              <option>Toyota</option><option>Honda</option><option>Suzuki</option>
+              <option>Kia</option><option>Hyundai</option><option>Nissan</option>
+              <option>BMW</option><option>Mercedes</option><option>Audi</option>
+              <option>Ford</option><option>Chevrolet</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Model *</label>
+            <input type="text" id="car-model" placeholder="e.g. Corolla, Civic">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Year *</label>
+            <input type="number" id="car-year" placeholder="2022" min="1990" max="2025">
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <input type="text" id="car-color" placeholder="e.g. White, Black">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Mileage (km)</label>
+            <input type="number" id="car-mileage" placeholder="45000">
+          </div>
+          <div class="form-group">
+            <label>Engine (cc)</label>
+            <input type="text" id="car-engine" placeholder="1800cc">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Transmission</label>
+            <select id="car-trans">
+              <option>Automatic</option>
+              <option>Manual</option>
+              <option>CVT</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fuel Type</label>
+            <select id="car-fuel">
+              <option>Petrol</option>
+              <option>Diesel</option>
+              <option>Hybrid</option>
+              <option>CNG</option>
+              <option>Electric</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Price (PKR) *</label>
+          <input type="number" id="car-price" placeholder="2500000">
+        </div>
+        <div class="form-group">
+          <label>City / Location</label>
+          <input type="text" id="car-city" placeholder="e.g. Lahore">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="car-desc" placeholder="Describe the car condition, features, history..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Car Photo</label>
+          <div class="img-preview" id="img-preview-box" onclick="document.getElementById('car-img-input').click()">
+            <div class="img-preview-text" id="img-preview-text">
+              <div style="font-size:28px;">📷</div>
+              <div>Click to upload photo</div>
+              <div style="font-size:11px; margin-top:4px; color:#bbb;">JPG, PNG — max 5MB</div>
+            </div>
+            <img id="img-preview-img" style="display:none;">
+          </div>
+          <input type="file" id="car-img-input" accept="image/*" style="display:none;" onchange="previewImage(event)">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Status</label>
+            <select id="car-status">
+              <option value="Available">Available</option>
+              <option value="Sold">Sold</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Badge</label>
+            <select id="car-badge">
+              <option value="">None</option>
+              <option value="new">New Arrival</option>
+              <option value="featured">Featured</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="submit-btn" onclick="saveCar()" style="flex:2;">Save Listing</button>
+          <button onclick="resetForm()" style="flex:1; background:var(--gray-light); color:var(--dark); border:none; border-radius:8px; padding:13px; font-size:14px; font-weight:600; cursor:pointer;">Cancel</button>
+        </div>
+      </div>
+      <!-- MANAGE LISTINGS -->
+      <div class="manage-card">
+        <h3>📋 Manage Listings <span id="manage-count" style="font-size:13px; font-weight:400; color:var(--gray);"></span></h3>
+        <div class="manage-list" id="manage-list"></div>
+      </div>
+    </div>
+    <div style="margin-top:20px; text-align:right;">
+      <button onclick="adminLogout()" style="background:var(--gray-light); border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer; color:var(--dark);">🔓 Logout</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Aurangzaib Cars</strong> — Lahore, Pakistan</p>
+  <p style="margin-top:8px;">© 2025 Aurangzaib Cars. All rights reserved. | Built with ❤️</p>
+</footer>
+
+<!-- CAR DETAIL MODAL -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeCarModal()">✕</button>
+    <div id="modal-img-area"></div>
+    <h2 id="modal-title"></h2>
+    <div id="modal-status-badge" style="margin-bottom:8px;"></div>
+    <div class="modal-price" id="modal-price"></div>
+    <div class="spec-grid" id="modal-specs"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+    <div class="modal-btns">
+      <button style="background:#25d366; color:#fff;" id="modal-whatsapp-btn">📲 WhatsApp Inquiry</button>
+      <button style="background:var(--dark); color:#fff;" onclick="closeCarModal()">← Back to Listings</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================== DATA STORE =====================
+let cars = JSON.parse(localStorage.getItem('aurangzaib_cars') || '[]');
+let adminLoggedIn = false;
+const ADMIN_PASSWORD = 'admin123';
+
+// Seed demo cars if empty
+if (cars.length === 0) {
+  cars = [
+    { id: 1, make: 'Toyota', model: 'Corolla Altis', year: 2022, color: 'Pearl White', mileage: 32000, engine: '1800cc', trans: 'Automatic', fuel: 'Petrol', price: 4200000, city: 'Lahore', desc: 'Excellent condition, single owner, all original parts. Full service history available. Power windows, alloy wheels, factory fitted CNG.', status: 'Available', badge: 'featured', img: '' },
+    { id: 2, make: 'Honda', model: 'Civic Oriel', year: 2021, color: 'Sonic Grey', mileage: 48000, engine: '1500cc', trans: 'CVT', fuel: 'Petrol', price: 5800000, city: 'Lahore', desc: 'Top of the line Oriel variant. Lane watch, sunroof, leather seats. No accidents, all paperwork clear.', status: 'Available', badge: 'new', img: '' },
+    { id: 3, make: 'Suzuki', model: 'Swift GL', year: 2023, color: 'Red', mileage: 12000, engine: '1300cc', trans: 'Manual', fuel: 'Petrol', price: 2900000, city: 'Lahore', desc: 'Brand new condition. Economy car perfect for city driving. Excellent fuel average.', status: 'Available', badge: 'new', img: '' },
+    { id: 4, make: 'Kia', model: 'Sportage AWD', year: 2022, color: 'Gravity Blue', mileage: 26000, engine: '2000cc', trans: 'Automatic', fuel: 'Petrol', price: 9500000, city: 'Lahore', desc: 'Fully loaded AWD variant with panoramic sunroof, 360 camera, heated seats. Immaculate condition.', status: 'Available', badge: 'featured', img: '' },
+    { id: 5, make: 'Toyota', model: 'Hilux Revo', year: 2020, color: 'Black', mileage: 75000, engine: '2800cc', trans: 'Automatic', fuel: 'Diesel', price: 8200000, city: 'Lahore', desc: 'Pickup truck in great condition. Used for light commercial purposes. All accessories included.', status: 'Sold', badge: '', img: '' },
+    { id: 6, make: 'Honda', model: 'HR-V', year: 2019, color: 'White', mileage: 92000, engine: '1800cc', trans: 'CVT', fuel: 'Petrol', price: 4100000, city: 'Lahore', desc: 'Imported HR-V with low mileage for its year. Fully loaded interior, no accidents.', status: 'Available', badge: '', img: '' },
+  ];
+  saveCarsToStorage();
+}
+
+function saveCarsToStorage() {
+  localStorage.setItem('aurangzaib_cars', JSON.stringify(cars));
+}
+
+// ===================== RENDER =====================
+function formatPrice(p) {
+  if (p >= 10000000) return (p/10000000).toFixed(2) + ' Cr';
+  if (p >= 100000) return (p/100000).toFixed(1) + ' Lakh';
+  return p.toLocaleString();
+}
+
+function renderCars(list) {
+  const grid = document.getElementById('cars-grid');
+  const noRes = document.getElementById('no-results');
+  if (!list.length) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+  grid.innerHTML = list.map(car => `
+    <div class="car-card" onclick="openCarModal(${car.id})">
+      <div class="car-img" style="position:relative;">
+        ${car.img ? `<img src="${car.img}" alt="${car.make} ${car.model}">` : `
+        <div class="car-img-placeholder">
+          <svg width="48" height="48" fill="none" stroke="#bbb" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M5 17H3a2 2 0 01-2-2v-4l2-6h14l2 6v4a2 2 0 01-2 2h-2M5 17h10M5 17a2 2 0 004 0M15 17a2 2 0 004 0M3 11h18"/>
+          </svg>
+          <span>No Image</span>
+        </div>`}
+        ${car.status === 'Sold' ? '<span class="badge-sold">SOLD</span>' : ''}
+        ${car.badge === 'new' ? '<span class="badge-new">NEW</span>' : ''}
+        ${car.badge === 'featured' ? '<span class="badge-featured">⭐ FEATURED</span>' : ''}
+      </div>
+      <div class="car-info">
+        <div class="car-title">${car.year} ${car.make} ${car.model}</div>
+        <div class="car-specs">
+          <span>📍 ${car.city || 'Lahore'}</span>
+          <span>⚙️ ${car.trans}</span>
+          <span>⛽ ${car.fuel}</span>
+        </div>
+        <div class="car-specs">
+          <span>🔢 ${car.mileage ? car.mileage.toLocaleString() + ' km' : 'N/A'}</span>
+          <span>🔧 ${car.engine || 'N/A'}</span>
+          ${car.color ? `<span>🎨 ${car.color}</span>` : ''}
+        </div>
+        <div class="car-price">PKR ${formatPrice(car.price)} <small>${car.status === 'Sold' ? '(Sold)' : 'Negotiable'}</small></div>
+        <div class="car-actions">
+          <button class="btn-detail" onclick="event.stopPropagation(); openCarModal(${car.id})">View Details</button>
+          <button class="btn-whatsapp" onclick="event.stopPropagation(); whatsappInquiry(${car.id})">
+            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = cars.length;
+  document.getElementById('stat-sold').textContent = cars.filter(c => c.status === 'Sold').length;
+}
+
+function renderAll() {
+  renderCars(cars);
+  updateStats();
+  renderManageList();
+  document.getElementById('listing-count').textContent = cars.length + ' listings';
+}
+
+// ===================== FILTERS =====================
+function filterCars() {
+  const make = document.getElementById('filter-make').value;
+  const year = document.getElementById('filter-year').value;
+  const price = document.getElementById('filter-price').value;
+  const condition = document.getElementById('filter-condition').value;
+  const search = document.getElementById('filter-search').value.toLowerCase();
+
+  let filtered = cars.filter(c => {
+    if (make && c.make !== make) return false;
+    if (year && year !== 'Older' && c.year < parseInt(year)) return false;
+    if (price && c.price > parseInt(price)) return false;
+    if (condition && c.status !== condition) return false;
+    if (search && !(c.make + ' ' + c.model).toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  renderCars(filtered);
+  document.getElementById('listing-count').textContent = filtered.length + ' listing(s) found';
+}
+
+function resetFilters() {
+  document.getElementById('filter-make').value = '';
+  document.getElementById('filter-year').value = '';
+  document.getElementById('filter-price').value = '';
+  document.getElementById('filter-condition').value = '';
+  document.getElementById('filter-search').value = '';
+  renderCars(cars);
+  document.getElementById('listing-count').textContent = cars.length + ' listings';
+}
+
+// ===================== MODAL =====================
+function openCarModal(id) {
+  const car = cars.find(c => c.id === id);
+  if (!car) return;
+  document.getElementById('modal-title').textContent = `${car.year} ${car.make} ${car.model}`;
+  document.getElementById('modal-price').textContent = 'PKR ' + formatPrice(car.price);
+  document.getElementById('modal-status-badge').innerHTML = `<span style="background:${car.status==='Sold'?'#fee2e2':'#dcfce7'}; color:${car.status==='Sold'?'#c0392b':'#16a34a'}; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:700;">${car.status}</span>`;
+  document.getElementById('modal-img-area').innerHTML = car.img
+    ? `<img class="modal-img" src="${car.img}" alt="${car.make} ${car.model}">`
+    : `<div class="modal-img-placeholder">📷 No photo uploaded</div>`;
+  document.getElementById('modal-specs').innerHTML = `
+    <div class="spec-item"><label>Year</label><span>${car.year}</span></div>
+    <div class="spec-item"><label>Make & Model</label><span>${car.make} ${car.model}</span></div>
+    <div class="spec-item"><label>Engine</label><span>${car.engine || 'N/A'}</span></div>
+    <div class="spec-item"><label>Transmission</label><span>${car.trans}</span></div>
+    <div class="spec-item"><label>Fuel</label><span>${car.fuel}</span></div>
+    <div class="spec-item"><label>Mileage</label><span>${car.mileage ? car.mileage.toLocaleString() + ' km' : 'N/A'}</span></div>
+    <div class="spec-item"><label>Color</label><span>${car.color || 'N/A'}</span></div>
+    <div class="spec-item"><label>Location</label><span>${car.city || 'Lahore'}</span></div>
+  `;
+  document.getElementById('modal-desc').textContent = car.desc || 'No description provided.';
+  document.getElementById('modal-whatsapp-btn').onclick = () => whatsappInquiry(id);
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCarModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-backdrop')) closeCarModal();
+}
+
+// ===================== WHATSAPP =====================
+function whatsappInquiry(id) {
+  const car = cars.find(c => c.id === id);
+  if (!car) return;
+  const msg = `Hi Aurangzaib! I'm interested in the ${car.year} ${car.make} ${car.model} listed for PKR ${formatPrice(car.price)}. Please share more details.`;
+  window.open('https://wa.me/923001234567?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function sendContactMsg() {
+  const name = document.getElementById('contact-name').value;
+  const phone = document.getElementById('contact-phone').value;
+  const msg = document.getElementById('contact-msg').value;
+  if (!name || !msg) { showToast('Please fill in your name and message.'); return; }
+  const text = `Hi! My name is ${name}. Phone: ${phone}. \n\n${msg}`;
+  window.open('https://wa.me/923001234567?text=' + encodeURIComponent(text), '_blank');
+}
+
+// ===================== ADMIN =====================
+function adminLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  if (pw === ADMIN_PASSWORD) {
+    adminLoggedIn = true;
+    document.getElementById('admin-lock-box').style.display = 'none';
+    document.getElementById('admin-panel').classList.add('visible');
+    renderManageList();
+    showToast('✅ Admin access granted!');
+  } else {
+    showToast('❌ Incorrect password. Try: admin123');
+  }
+}
+
+function adminLogout() {
+  adminLoggedIn = false;
+  document.getElementById('admin-lock-box').style.display = 'block';
+  document.getElementById('admin-panel').classList.remove('visible');
+  document.getElementById('admin-pw').value = '';
+  showToast('Logged out.');
+}
+
+let currentImgData = '';
+
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    currentImgData = e.target.result;
+    const img = document.getElementById('img-preview-img');
+    img.src = currentImgData;
+    img.style.display = 'block';
+    document.getElementById('img-preview-text').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveCar() {
+  const make = document.getElementById('car-make').value;
+  const model = document.getElementById('car-model').value.trim();
+  const year = parseInt(document.getElementById('car-year').value);
+  const price = parseInt(document.getElementById('car-price').value);
+
+  if (!make || !model || !year || !price) {
+    showToast('Please fill in Make, Model, Year, and Price.'); return;
+  }
+
+  const editId = document.getElementById('edit-id').value;
+  const carData = {
+    make, model, year, price,
+    color: document.getElementById('car-color').value,
+    mileage: parseInt(document.getElementById('car-mileage').value) || 0,
+    engine: document.getElementById('car-engine').value,
+    trans: document.getElementById('car-trans').value,
+    fuel: document.getElementById('car-fuel').value,
+    city: document.getElementById('car-city').value || 'Lahore',
+    desc: document.getElementById('car-desc').value,
+    status: document.getElementById('car-status').value,
+    badge: document.getElementById('car-badge').value,
+    img: currentImgData,
+  };
+
+  if (editId) {
+    const idx = cars.findIndex(c => c.id === parseInt(editId));
+    if (idx > -1) {
+      cars[idx] = { ...cars[idx], ...carData };
+      showToast('✅ Car listing updated!');
+    }
+  } else {
+    carData.id = Date.now();
+    cars.unshift(carData);
+    showToast('✅ Car added successfully!');
+  }
+
+  saveCarsToStorage();
+  renderAll();
+  resetForm();
+}
+
+function editCar(id) {
+  const car = cars.find(c => c.id === id);
+  if (!car) return;
+  document.getElementById('edit-id').value = id;
+  document.getElementById('form-title').textContent = '✏️ Edit Listing';
+  document.getElementById('car-make').value = car.make;
+  document.getElementById('car-model').value = car.model;
+  document.getElementById('car-year').value = car.year;
+  document.getElementById('car-color').value = car.color || '';
+  document.getElementById('car-mileage').value = car.mileage || '';
+  document.getElementById('car-engine').value = car.engine || '';
+  document.getElementById('car-trans').value = car.trans;
+  document.getElementById('car-fuel').value = car.fuel;
+  document.getElementById('car-price').value = car.price;
+  document.getElementById('car-city').value = car.city || '';
+  document.getElementById('car-desc').value = car.desc || '';
+  document.getElementById('car-status').value = car.status;
+  document.getElementById('car-badge').value = car.badge || '';
+  currentImgData = car.img || '';
+  if (car.img) {
+    document.getElementById('img-preview-img').src = car.img;
+    document.getElementById('img-preview-img').style.display = 'block';
+    document.getElementById('img-preview-text').style.display = 'none';
+  }
+  document.getElementById('admin-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function deleteCar(id) {
+  if (!confirm('Delete this listing? This cannot be undone.')) return;
+  cars = cars.filter(c => c.id !== id);
+  saveCarsToStorage();
+  renderAll();
+  showToast('🗑️ Listing deleted.');
+}
+
+function toggleStatus(id) {
+  const car = cars.find(c => c.id === id);
+  if (!car) return;
+  car.status = car.status === 'Available' ? 'Sold' : 'Available';
+  saveCarsToStorage();
+  renderAll();
+  showToast(`Status updated to: ${car.status}`);
+}
+
+function resetForm() {
+  document.getElementById('edit-id').value = '';
+  document.getElementById('form-title').textContent = '➕ Add New Car';
+  document.getElementById('car-make').value = '';
+  document.getElementById('car-model').value = '';
+  document.getElementById('car-year').value = '';
+  document.getElementById('car-color').value = '';
+  document.getElementById('car-mileage').value = '';
+  document.getElementById('car-engine').value = '';
+  document.getElementById('car-trans').value = 'Automatic';
+  document.getElementById('car-fuel').value = 'Petrol';
+  document.getElementById('car-price').value = '';
+  document.getElementById('car-city').value = '';
+  document.getElementById('car-desc').value = '';
+  document.getElementById('car-status').value = 'Available';
+  document.getElementById('car-badge').value = '';
+  document.getElementById('img-preview-img').style.display = 'none';
+  document.getElementById('img-preview-text').style.display = 'flex';
+  document.getElementById('img-preview-text').style.flexDirection = 'column';
+  document.getElementById('img-preview-text').style.alignItems = 'center';
+  currentImgData = '';
+}
+
+function renderManageList() {
+  const list = document.getElementById('manage-list');
+  if (!list) return;
+  document.getElementById('manage-count').textContent = `(${cars.length} total)`;
+  if (!cars.length) {
+    list.innerHTML = '<p style="text-align:center; color:var(--gray); padding:20px;">No listings yet.</p>';
+    return;
+  }
+  list.innerHTML = cars.map(car => `
+    <div class="manage-item">
+      <div class="manage-item-info">
+        <div class="manage-item-title">${car.year} ${car.make} ${car.model}</div>
+        <div class="manage-item-price">PKR ${formatPrice(car.price)}</div>
+      </div>
+      <span class="manage-item-status ${car.status === 'Available' ? 'status-available' : 'status-sold'}"
+        onclick="toggleStatus(${car.id})" style="cursor:pointer;" title="Click to toggle status">
+        ${car.status}
+      </span>
+      <div class="manage-actions">
+        <button class="btn-edit" onclick="editCar(${car.id})">Edit</button>
+        <button class="btn-del" onclick="deleteCar(${car.id})">Del</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===================== UTILS =====================
+function scrollTo(selector) {
+  document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===================== INIT =====================
+renderAll();
+</script>
+</body>
+</html>
