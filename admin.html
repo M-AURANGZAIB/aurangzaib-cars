@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Aurangzaib Cars</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #b91c1c; --red-dark: #991b1b;
+    --blue: #1d4ed8; --blue-dark: #1e3a8a;
+    --dark: #111827; --dark2: #1f2937;
+    --gray: #6b7280; --gray-light: #f9fafb;
+    --white: #ffffff; --border: #e5e7eb;
+    --success: #15803d; --gold: #d97706;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: #f1f5f9; min-height: 100vh; }
+
+  /* TOP NAV */
+  nav {
+    background: var(--dark); display: flex; align-items: center;
+    justify-content: space-between; padding: 0 5%; height: 64px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .logo-top { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 2px; }
+  .logo-top span { color: var(--red); }
+  .admin-badge { background: var(--red); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; letter-spacing: 1px; text-transform: uppercase; }
+  .nav-back { color: #9ca3af; font-size: 13px; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .2s; }
+  .nav-back:hover { color: #fff; }
+
+  /* LOCK */
+  .lock-wrap { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 64px); padding: 40px 20px; }
+  .lock-card { background: var(--dark); border-radius: 16px; padding: 52px 44px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .lock-card .lock-icon { font-size: 48px; margin-bottom: 20px; }
+  .lock-card h2 { color: #fff; font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .lock-card p { color: #9ca3af; font-size: 14px; margin-bottom: 28px; }
+  .lock-card input { width: 100%; padding: 14px 16px; background: #1f2937; border: 1.5px solid #374151; border-radius: 10px; color: #fff; font-size: 15px; font-family: 'Inter', sans-serif; margin-bottom: 14px; }
+  .lock-card input:focus { outline: none; border-color: var(--red); }
+  .btn-red { background: var(--red); color: #fff; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; text-transform: uppercase; letter-spacing: .5px; }
+  .btn-red:hover { background: var(--red-dark); }
+
+  /* ADMIN PANEL */
+  .admin-wrap { display: none; padding: 40px 5%; }
+  .admin-wrap.on { display: block; }
+  .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+  .admin-header h1 { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+  .admin-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .acard { background: #fff; border-radius: 14px; padding: 28px; box-shadow: var(--shadow); }
+  .acard h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+  .af { margin-bottom: 14px; }
+  .af label { display: block; font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+  .af input, .af select, .af textarea { width: 100%; padding: 10px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; background: var(--gray-light); color: var(--dark); transition: border-color .2s; }
+  .af input:focus, .af select:focus, .af textarea:focus { outline: none; border-color: var(--blue); }
+  .af textarea { resize: vertical; min-height: 70px; }
+  .af-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .img-drop { width: 100%; height: 130px; border: 2px dashed var(--border); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: var(--gray-light); transition: border-color .2s; position: relative; overflow: hidden; }
+  .img-drop:hover { border-color: var(--blue); }
+  .img-drop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+  .img-drop-hint { font-size: 12px; color: var(--gray); text-align: center; pointer-events: none; }
+  .img-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .manage-list { display: flex; flex-direction: column; gap: 8px; max-height: 520px; overflow-y: auto; padding-right: 4px; }
+  .mitem { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--gray-light); }
+  .mitem-info { flex: 1; min-width: 0; }
+  .mitem-name { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mitem-price { font-size: 12px; color: var(--blue); font-weight: 700; }
+  .mstatus { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 20px; cursor: pointer; white-space: nowrap; text-transform: uppercase; letter-spacing: .3px; }
+  .ms-avail { background: #dcfce7; color: var(--success); }
+  .ms-sold { background: #fee2e2; color: var(--red); }
+  .mact { display: flex; gap: 5px; }
+  .mact button { border: none; border-radius: 6px; padding: 5px 10px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .mact .edit { background: #e0f2fe; color: #0369a1; }
+  .mact .del { background: #fee2e2; color: var(--red); }
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--dark); color: #fff; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 600; z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+  @media (max-width: 900px) { .admin-cols { grid-template-columns: 1fr; } .af-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo-top">AURANGZAIB<span> CARS</span></span>
+  <span class="admin-badge">🔐 Admin</span>
+  <a class="nav-back" href="index.html">← Back to Site</a>
+</nav>
+
+<!-- LOCK SCREEN -->
+<div class="lock-wrap" id="lock-wrap">
+  <div class="lock-card">
+    <div class="lock-icon">🔐</div>
+    <h2>Admin Access</h2>
+    <p>Enter your password to manage car listings</p>
+    <input type="password" id="apw" placeholder="Enter password..." onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-red" onclick="doLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-wrap" id="admin-wrap">
+  <div class="admin-header">
+    <h1>📋 Manage Listings</h1>
+    <button onclick="doLogout()" style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;color:var(--dark);">🔓 Logout</button>
+  </div>
+  <div class="admin-cols">
+    <!-- ADD / EDIT FORM -->
+    <div class="acard">
+      <h3 id="form-head">➕ Add New Listing</h3>
+      <input type="hidden" id="eid">
+      <div class="af-row">
+        <div class="af"><label>Make *</label>
+          <select id="amake">
+            <option value="">Select Make</option>
+            <option>Toyota</option><option>Honda</option><option>Ford</option>
+            <option>Chevrolet</option><option>Nissan</option><option>Jeep</option>
+            <option>Dodge</option><option>Ram</option><option>GMC</option>
+            <option>BMW</option><option>Mercedes-Benz</option><option>Audi</option>
+            <option>Hyundai</option><option>Kia</option><option>Subaru</option>
+            <option>Volkswagen</option><option>Lexus</option><option>Acura</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="af"><label>Model *</label><input type="text" id="amodel" placeholder="Camry, F-150..."></div>
+      </div>
+      <div class="af-row">
+        <div class="af"><label>Year *</label><input type="number" id="ayear" placeholder="2021" min="1990" max="2026"></div>
+        <div class="af"><label>Color</label><input type="text" id="acolor" placeholder="Silver, Black..."></div>
+      </div>
+      <div class="af-row">
+        <div class="af"><label>Mileage</label><input type="number" id="amiles" placeholder="45000"></div>
+        <div class="af"><label>Engine</label><input type="text" id="aengine" placeholder="2.5L 4-cyl"></div>
+      </div>
+      <div class="af-row">
+        <div class="af"><label>Transmission</label>
+          <select id="atrans"><option>Automatic</option><option>Manual</option><option>CVT</option></select>
+        </div>
+        <div class="af"><label>Drivetrain</label>
+          <select id="adrive"><option>FWD</option><option>RWD</option><option>AWD</option><option>4WD</option></select>
+        </div>
+      </div>
+      <div class="af-row">
+        <div class="af"><label>Fuel</label>
+          <select id="afuel"><option>Gasoline</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select>
+        </div>
+        <div class="af"><label>Body Style</label>
+          <select id="abody"><option>Sedan</option><option>SUV</option><option>Truck</option><option>Coupe</option><option>Van</option><option>Hatchback</option><option>Convertible</option><option>Wagon</option></select>
+        </div>
+      </div>
+      <div class="af"><label>Price (USD) *</label><input type="number" id="aprice" placeholder="12500"></div>
+      <div class="af"><label>Description</label><textarea id="adesc" placeholder="Condition, features, history..."></textarea></div>
+      <div class="af"><label>Photo</label>
+        <div class="img-drop" id="imgdrop">
+          <div class="img-drop-hint">📷<br><span style="font-size:11px;margin-top:4px;display:block;">Click to upload photo</span></div>
+          <img id="imgprev">
+          <input type="file" accept="image/*" onchange="prevImg(event)">
+        </div>
+      </div>
+      <div class="af-row">
+        <div class="af"><label>Status</label>
+          <select id="astatus"><option value="Available">Available</option><option value="Sold">Sold</option></select>
+        </div>
+        <div class="af"><label>Highlight</label>
+          <select id="abadge"><option value="">None</option><option value="new">New Arrival</option><option value="featured">Featured</option><option value="reduced">Price Reduced</option></select>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button class="btn-red" style="flex:2;padding:13px;font-size:14px;" onclick="saveCar()">Save Listing</button>
+        <button onclick="resetForm()" style="flex:1;background:var(--gray-light);color:var(--dark);border:1.5px solid var(--border);border-radius:8px;padding:13px;font-size:13px;font-weight:600;cursor:pointer;">Cancel</button>
+      </div>
+    </div>
+    <!-- MANAGE LIST -->
+    <div class="acard">
+      <h3>📋 Manage Listings <span id="mcnt" style="font-size:13px;font-weight:400;color:var(--gray);"></span></h3>
+      <div class="manage-list" id="mlist"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PASSWORD = 'admin123'; // ← Change this to your own password
+
+let cars = JSON.parse(localStorage.getItem('az_cars_v2') || 'null');
+let loggedIn = false;
+let imgData = '';
+
+if (!cars) {
+  cars = [
+    { id:1, make:'Toyota', model:'Camry LE', year:2019, color:'Silver', miles:68000, engine:'2.5L 4-cyl', trans:'Automatic', drive:'FWD', fuel:'Gasoline', body:'Sedan', price:14500, desc:'One owner, great condition.', status:'Available', badge:'featured', img:'' },
+    { id:2, make:'Honda', model:'CR-V EX', year:2020, color:'White', miles:42000, engine:'1.5L Turbo', trans:'CVT', drive:'AWD', fuel:'Gasoline', body:'SUV', price:24900, desc:'AWD CR-V with sunroof, heated seats.', status:'Available', badge:'new', img:'' },
+    { id:3, make:'Ford', model:'F-150 XLT', year:2018, color:'Black', miles:88000, engine:'5.0L V8', trans:'Automatic', drive:'4WD', fuel:'Gasoline', body:'Truck', price:27500, desc:'V8 power with 4WD. Tow package.', status:'Available', badge:'', img:'' },
+    { id:4, make:'Chevrolet', model:'Malibu LT', year:2021, color:'Blue', miles:28000, engine:'1.5L Turbo', trans:'Automatic', drive:'FWD', fuel:'Gasoline', body:'Sedan', price:17900, desc:'Low miles, one owner.', status:'Available', badge:'new', img:'' },
+    { id:5, make:'Toyota', model:'RAV4 XLE', year:2017, color:'Gray', miles:95000, engine:'2.5L 4-cyl', trans:'Automatic', drive:'AWD', fuel:'Gasoline', body:'SUV', price:18500, desc:'Well-maintained, all service records.', status:'Sold', badge:'', img:'' },
+    { id:6, make:'Jeep', model:'Grand Cherokee', year:2019, color:'Red', miles:54000, engine:'3.6L V6', trans:'Automatic', drive:'4WD', fuel:'Gasoline', body:'SUV', price:29900, desc:'Laredo trim with 4WD. Clean carfax.', status:'Available', badge:'featured', img:'' },
+  ];
+  save();
+}
+
+function save() { localStorage.setItem('az_cars_v2', JSON.stringify(cars)); }
+function fmtPrice(p) { return '$' + p.toLocaleString(); }
+
+function doLogin() {
+  if (document.getElementById('apw').value === ADMIN_PASSWORD) {
+    loggedIn = true;
+    document.getElementById('lock-wrap').style.display = 'none';
+    document.getElementById('admin-wrap').classList.add('on');
+    renderManage();
+    toast('✅ Welcome back, Aurangzaib!');
+  } else { toast('❌ Wrong password.'); }
+}
+
+function doLogout() {
+  loggedIn = false;
+  document.getElementById('lock-wrap').style.display = 'flex';
+  document.getElementById('admin-wrap').classList.remove('on');
+  document.getElementById('apw').value = '';
+  toast('Logged out.');
+}
+
+function prevImg(e) {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = x => {
+    imgData = x.target.result;
+    const i = document.getElementById('imgprev');
+    i.src = imgData; i.style.display = 'block';
+    document.querySelector('.img-drop-hint').style.display = 'none';
+  };
+  r.readAsDataURL(f);
+}
+
+function saveCar() {
+  const make = document.getElementById('amake').value;
+  const model = document.getElementById('amodel').value.trim();
+  const year = parseInt(document.getElementById('ayear').value);
+  const price = parseInt(document.getElementById('aprice').value);
+  if (!make||!model||!year||!price) { toast('Please fill Make, Model, Year, and Price.'); return; }
+  const eid = document.getElementById('eid').value;
+  const d = { make, model, year, price,
+    color: document.getElementById('acolor').value,
+    miles: parseInt(document.getElementById('amiles').value)||0,
+    engine: document.getElementById('aengine').value,
+    trans: document.getElementById('atrans').value,
+    drive: document.getElementById('adrive').value,
+    fuel: document.getElementById('afuel').value,
+    body: document.getElementById('abody').value,
+    desc: document.getElementById('adesc').value,
+    status: document.getElementById('astatus').value,
+    badge: document.getElementById('abadge').value,
+    img: imgData,
+  };
+  if (eid) {
+    const i = cars.findIndex(c=>c.id===parseInt(eid));
+    if (i>-1) { cars[i] = {...cars[i],...d}; toast('✅ Listing updated!'); }
+  } else {
+    d.id = Date.now(); cars.unshift(d); toast('✅ Car added!');
+  }
+  save(); renderManage(); resetForm();
+}
+
+function editCar(id) {
+  const c = cars.find(x=>x.id===id); if(!c) return;
+  document.getElementById('eid').value = id;
+  document.getElementById('form-head').textContent = '✏️ Edit Listing';
+  document.getElementById('amake').value = c.make;
+  document.getElementById('amodel').value = c.model;
+  document.getElementById('ayear').value = c.year;
+  document.getElementById('acolor').value = c.color||'';
+  document.getElementById('amiles').value = c.miles||'';
+  document.getElementById('aengine').value = c.engine||'';
+  document.getElementById('atrans').value = c.trans;
+  document.getElementById('adrive').value = c.drive||'FWD';
+  document.getElementById('afuel').value = c.fuel;
+  document.getElementById('abody').value = c.body||'Sedan';
+  document.getElementById('aprice').value = c.price;
+  document.getElementById('adesc').value = c.desc||'';
+  document.getElementById('astatus').value = c.status;
+  document.getElementById('abadge').value = c.badge||'';
+  imgData = c.img||'';
+  if (c.img) { document.getElementById('imgprev').src=c.img; document.getElementById('imgprev').style.display='block'; document.querySelector('.img-drop-hint').style.display='none'; }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function delCar(id) {
+  if (!confirm('Delete this listing permanently?')) return;
+  cars = cars.filter(c=>c.id!==id); save(); renderManage(); toast('🗑️ Deleted.');
+}
+
+function toggleStatus(id) {
+  const c = cars.find(x=>x.id===id); if(!c) return;
+  c.status = c.status==='Available'?'Sold':'Available';
+  save(); renderManage(); toast('Status: ' + c.status);
+}
+
+function resetForm() {
+  document.getElementById('eid').value='';
+  document.getElementById('form-head').textContent='➕ Add New Listing';
+  ['amake','amodel','ayear','acolor','amiles','aengine','aprice','adesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('atrans').value='Automatic';
+  document.getElementById('adrive').value='FWD';
+  document.getElementById('afuel').value='Gasoline';
+  document.getElementById('abody').value='Sedan';
+  document.getElementById('astatus').value='Available';
+  document.getElementById('abadge').value='';
+  document.getElementById('imgprev').style.display='none';
+  document.querySelector('.img-drop-hint').style.display='block';
+  imgData='';
+}
+
+function renderManage() {
+  const ml = document.getElementById('mlist');
+  document.getElementById('mcnt').textContent = '(' + cars.length + ')';
+  ml.innerHTML = cars.length ? cars.map(c=>`
+    <div class="mitem">
+      <div class="mitem-info">
+        <div class="mitem-name">${c.year} ${c.make} ${c.model}</div>
+        <div class="mitem-price">${fmtPrice(c.price)}</div>
+      </div>
+      <span class="mstatus ${c.status==='Available'?'ms-avail':'ms-sold'}" onclick="toggleStatus(${c.id})" title="Click to toggle">${c.status}</span>
+      <div class="mact">
+        <button class="edit" onclick="editCar(${c.id})">Edit</button>
+        <button class="del" onclick="delCar(${c.id})">Del</button>
+      </div>
+    </div>
+  `).join('') : '<p style="text-align:center;padding:20px;color:var(--gray);">No listings yet.</p>';
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
